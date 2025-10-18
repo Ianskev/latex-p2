@@ -1,0 +1,737 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage{booktabs}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage{svg}
+\usepackage{float}
+% Suprime warnings de "multiple pdfs with page group included in a single page"
+\pdfsuppresswarningpagegroup=1
+% Subfiguras compatibles con IEEEtran (no usa caption.sty)
+\usepackage[caption=false,font=footnotesize]{subfig}
+% Evitar que las figuras atraviesen subsecciones
+\usepackage[section]{placeins}
+% Compactar levemente espacios entre floats (figuras/tablas)
+\setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+\setlength{\abovecaptionskip}{3pt plus 1pt minus 1pt}
+\setlength{\belowcaptionskip}{0pt}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{Análisis Comparativo de Métodos de Reducción de Dimensionalidad para la Clasificación de Imágenes de Moda}
+
+\author{
+\IEEEauthorblockN{Patrick Ricardo Medina Reyes (100\%)}
+\IEEEauthorblockA{\textit{Data Science Department} \\
+\textit{Universidad de Ingeniería y Tecnología (UTEC)}\\
+Lima, Perú \\
+patrick.medina@utec.edu.pe}
+\and
+\IEEEauthorblockN{Ian Kevin Condori Flores (100\%)}
+\IEEEauthorblockA{\textit{Computer Science Department} \\
+\textit{Universidad de Ingeniería y Tecnología (UTEC)}\\
+Lima, Perú \\
+ian.condori@utec.edu.pe}
+}
+
+\maketitle
+
+\begin{abstract}
+Este proyecto analiza diversos métodos de reducción de dimensionalidad aplicados a la clasificación de imágenes del dataset Fashion-MNIST. 
+El objetivo es identificar qué combinación entre técnica de reducción (PCA, NMF, t-SNE, UMAP, etc.) y clasificador (SVM, Regresión Logística, Random Forest, KNN) logra el mejor desempeño considerando precisión, interpretabilidad y eficiencia computacional. 
+Se emplearon métricas estándar como Accuracy, Precision, Recall y F1-Score para la evaluación. 
+Este trabajo demuestra que PCA combinado con SVM ofrece una solución eficiente y precisa para problemas de clasificación de imágenes de moda, reduciendo el costo computacional sin pérdida significativa de desempeño.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Dimensionality Reduction, Image Classification, PCA, t-SNE, UMAP, Fashion-MNIST, Machine Learning
+\end{IEEEkeywords}
+
+% ==============================
+\section{Introducción}
+Con el crecimiento de los datasets visuales, la reducción de dimensionalidad se ha vuelto esencial para la eficiencia en pipelines de visión por computadora.
+En el contexto del dataset Fashion-MNIST, cada imagen posee 784 características (28x28 píxeles), lo cual puede afectar negativamente el rendimiento de los modelos de clasificación.
+
+El objetivo principal de este estudio es evaluar el impacto de diferentes técnicas de reducción de dimensionalidad en el desempeño de modelos clásicos de clasificación aplicados al dataset Fashion-MNIST.
+
+% ==============================
+\section{Importancia y Justificación}
+La reducción de dimensionalidad cumple un rol fundamental en el aprendizaje automático, al disminuir la complejidad de los datos y facilitar su interpretación. 
+Entre las principales motivaciones de este estudio se destacan:
+
+\begin{itemize}
+    \item \textbf{Optimización de modelos:} al reducir el número de características se acelera el entrenamiento y se mitiga el sobreajuste.
+    \item \textbf{Interpretabilidad:} métodos como t-SNE y UMAP permiten visualizar la distribución de las clases en 2D, revelando relaciones intrínsecas.
+    \item \textbf{Eficiencia:} se mejora el uso de recursos computacionales sin comprometer la precisión.
+\end{itemize}
+Además, uno de los objetivos clave de este estudio fue optimizar el tiempo de entrenamiento de los modelos, ya que la búsqueda exhaustiva de hiperparámetros puede demandar un elevado costo computacional. En este sentido, se exploraron estrategias que permitieran reducir significativamente el tiempo de ejecución sin comprometer la precisión de los resultados.
+
+
+% ==============================
+\section{Metodología}
+\subsection{Dataset y Preprocesamiento}
+
+El conjunto de datos utilizado en este estudio fue \textbf{Fashion-MNIST}, una base de datos pública ampliamente empleada para tareas de clasificación de imágenes. Está compuesta por \textbf{70,000 imágenes en escala de grises de 28x28 píxeles}, distribuidas en \textbf{10 clases} correspondientes a diferentes categorías de prendas de vestir, tales como camisetas, pantalones, vestidos, zapatillas, entre otros. De estas imágenes, \textbf{60,000 se emplearon para entrenamiento} y \textbf{10,000 para evaluación}.
+
+\subsubsection{Descripción del Dataset}
+Cada imagen contiene un único artículo de moda centrado y normalizado en tamaño. Las etiquetas de clase son enteros del 0 al 9, asignados de la siguiente manera:  
+0 = \textit{T-shirt/top},  
+1 = \textit{Trouser},  
+2 = \textit{Pullover},  
+3 = \textit{Dress},  
+4 = \textit{Coat},  
+5 = \textit{Sandal},  
+6 = \textit{Shirt},  
+7 = \textit{Sneaker},  
+8 = \textit{Bag},  
+9 = \textit{Ankle boot}.
+
+Para brindar una idea visual del conjunto de datos, la Figura~\ref{fig:mi-svg} muestra ejemplos representativos de cada clase.
+
+
+\begin{figure}[H]
+    \centering
+    \includesvg[width=1\linewidth]{mosaico_fashion_mnist.svg}
+    \caption{Ejemplos de imágenes del dataset Fashion-MNIST, una por clase.}
+    \label{fig:mi-svg}
+\end{figure}
+
+
+% Ejemplos de imágenes del dataset Fashion-MNIST, una por clase.
+
+\subsubsection{Análisis Exploratorio de Datos (EDA)}
+Antes de aplicar las técnicas de reducción de dimensionalidad, se realizó un análisis exploratorio para comprender la estructura y variabilidad del conjunto de datos. La Figura~\ref{fig:class_distribution} presenta la distribución de clases, evidenciando un balance uniforme entre las diez categorías. Este equilibrio garantiza que los modelos no se vean sesgados hacia una clase específica.
+
+\begin{figure}[H]
+    \centering
+    \includesvg[width=0.45\textwidth]{distribucion_clases_fashionmnist}
+    \caption{Distribución de clases en el conjunto de datos Fashion-MNIST.}
+    \label{fig:class_distribution}
+\end{figure}
+
+
+Asimismo, se calcularon estadísticas descriptivas de los valores de píxel, los cuales oscilan entre 0 (negro) y 255 (blanco). La Figura~\ref{fig:histograma_intensidades_promedio} muestra el histograma de intensidades promedio, donde se observa una concentración predominante en valores medios, reflejando la presencia de bordes y contornos característicos de las prendas.
+
+
+\begin{figure}[H]
+    \centering
+    \includesvg[width=0.45\textwidth]{histograma_intensidades_fashionmnist}
+    \caption{Histograma-de intensidades de píxeles en el dataset Fashion-MNIST.}
+    \label{fig:histograma_intensidades_promedio}
+\end{figure}
+
+
+
+Este análisis permitió confirmar que los datos no requerían balanceo adicional ni transformación de contraste. No obstante, se aplicaron transformaciones estándar para optimizar el rendimiento de los modelos de aprendizaje.
+
+
+\subsubsection{Preprocesamiento de Datos}
+
+Cada imagen del conjunto \textit{Fashion-MNIST} fue convertida a un vector unidimensional de tamaño $28 \times 28 = 784$ características, representando la intensidad de cada píxel en una sola dimensión. Esta transformación facilita la aplicación de los algoritmos de reducción de dimensionalidad y los modelos de clasificación posteriores.
+
+Con el objetivo de homogenizar la escala de las características y evitar que la magnitud de los valores afecte el desempeño de los algoritmos, se aplicaron diferentes estrategias de normalización según el método utilizado. Para las técnicas lineales como PCA y t-SNE, se empleó el método \texttt{StandardScaler}, que estandariza los datos restando la media y dividiendo entre la desviación estándar de cada característica:
+
+\begin{equation}
+x' = \frac{x - \mu}{\sigma},
+\label{eq:standardization}
+\end{equation}
+
+donde $\mu$ es la media y $\sigma$ la desviación estándar de la característica correspondiente. Este proceso genera variables con media cero y varianza unitaria, mejorando la estabilidad numérica y la interpretación geométrica de los componentes principales \cite{jolliffe2016principal}.
+
+Por otro lado, el modelo de \textit{Non-negative Matrix Factorization} (NMF) requiere entradas no negativas, por lo que se utilizó la técnica \texttt{MinMaxScaler}, la cual transforma los datos al rango $[0,1]$ según la ecuación:
+
+\begin{equation}
+x' = \frac{x - x_{\min}}{x_{\max} - x_{\min}},
+\label{eq:minmax_scaling}
+\end{equation}
+
+garantizando que todos los valores sean compatibles con las restricciones del modelo \cite{lee1999learning}.
+
+Es importante destacar que los parámetros de normalización (\textit{media}, \textit{desviación estándar}, \textit{mínimo} y \textit{máximo}) fueron calculados únicamente sobre el conjunto de entrenamiento, y posteriormente aplicados al conjunto de prueba, con el fin de evitar \textit{data leakage} y asegurar una evaluación justa del desempeño de los modelos.
+
+Finalmente, se incluirá una comparación visual entre las distintas técnicas de normalización utilizadas, donde se contrastarán las distribuciones de los datos antes y después del escalado. Esta comparación se muestra en la Figura~\ref{fig:normalization_comparison}, evidenciando el efecto del \texttt{StandardScaler} y del \texttt{MinMaxScaler} sobre las características de entrada.
+
+
+\begin{figure}[H]
+    \centering
+    \includesvg[width=1\linewidth]{comparacion_normalizaciones.svg}
+    \caption{Comparación visual de los efectos de las técnicas de normalización.}
+\label{fig:normalization_comparison}
+\end{figure}
+
+
+
+
+\subsection{Modelos de Reducción de Dimensionalidad}
+
+La reducción de dimensionalidad tiene como propósito representar un conjunto de datos de alta dimensión en un espacio de menor dimensión, preservando las relaciones estructurales más relevantes. Esta técnica permite disminuir el ruido, reducir el costo computacional y facilitar la visualización de los datos. En este trabajo se implementaron seis métodos representativos: \textit{Principal Component Analysis (PCA)} \cite{jolliffe2016principal}, \textit{Non-negative Matrix Factorization (NMF)} \cite{lee1999learning}, \textit{t-distributed Stochastic Neighbor Embedding (t-SNE)} \cite{maaten2008tsne}, \textit{Uniform Manifold Approximation and Projection (UMAP)} \cite{mcinnes2018umap}, \textit{Spectral Embedding} \cite{belkin2003laplacian} e \textit{Isometric Mapping (ISOMAP)} \cite{tenenbaum2000isomap}.
+
+%------------------------------------------------------------------------------
+\subsubsection{Principal Component Analysis (PCA)}
+
+El método de \textit{Análisis de Componentes Principales (PCA)} busca transformar un conjunto de variables correlacionadas en un nuevo sistema de coordenadas cuyos ejes (componentes principales) son linealmente independientes y maximizan la varianza de los datos proyectados \cite{jolliffe2016principal}. 
+
+Sea una matriz de datos centrada en la media $X \in \mathbb{R}^{m \times n}$, donde cada fila representa una observación y cada columna una característica. El objetivo de PCA es encontrar una proyección lineal $Y = XW$, donde $W \in \mathbb{R}^{n \times k}$ maximiza la varianza de los datos proyectados:
+
+\begin{equation}
+\max_{W^\top W = I} \; \mathrm{Tr}(W^\top S W),
+\end{equation}
+
+donde $S = \frac{1}{m-1} X^\top X$ es la matriz de covarianza.  
+La solución se obtiene resolviendo el problema de autovalores:
+
+\begin{equation}
+S v_i = \lambda_i v_i,
+\end{equation}
+
+donde $\lambda_i$ y $v_i$ son los autovalores y autovectores asociados. Los $k$ autovectores principales conforman la proyección $Y = X V_k$.  
+PCA es un método lineal, eficiente y ampliamente utilizado como paso inicial en visualización, compresión o preprocesamiento.
+
+%------------------------------------------------------------------------------
+\subsubsection{Non-negative Matrix Factorization (NMF)}
+
+La \textit{Factorización de Matrices No Negativas (NMF)} descompone una matriz de datos $X \in \mathbb{R}_{+}^{m \times n}$ en el producto de dos matrices no negativas $W \in \mathbb{R}_{+}^{m \times k}$ y $H \in \mathbb{R}_{+}^{k \times n}$, de modo que:
+
+\begin{equation}
+X \approx WH.
+\end{equation}
+
+El problema de optimización se formula como:
+
+\begin{equation}
+\min_{W, H \geq 0} \; \|X - WH\|_F^2,
+\end{equation}
+
+donde $\|\cdot\|_F$ es la norma de Frobenius.  
+Lee y Seung \cite{lee1999learning} propusieron las siguientes reglas de actualización multiplicativa:
+
+\begin{equation}
+H \leftarrow H \odot \frac{W^\top X}{W^\top W H}, \quad
+W \leftarrow W \odot \frac{X H^\top}{W H H^\top}.
+\end{equation}
+
+NMF permite una interpretación aditiva de los datos, útil en contextos donde las características son intrínsecamente no negativas, como en imágenes o texto.
+
+%------------------------------------------------------------------------------
+\subsubsection{t-distributed Stochastic Neighbor Embedding (t-SNE)}
+
+El método \textit{t-SNE}, propuesto por van der Maaten y Hinton \cite{maaten2008tsne}, es una técnica no lineal diseñada para preservar las relaciones locales entre muestras de alta dimensión. Define una distribución de similitud en el espacio original mediante probabilidades condicionales que miden la afinidad entre puntos:
+
+\begin{equation}
+p_{j|i} = \frac{\exp(-\|x_i - x_j\|^2 / 2\sigma_i^2)}{\sum_{k \neq i} \exp(-\|x_i - x_k\|^2 / 2\sigma_i^2)}.
+\end{equation}
+
+En el espacio reducido, se define una distribución análoga usando una $t$-Student con un grado de libertad:
+
+\begin{equation}
+q_{ij} = \frac{(1 + \|y_i - y_j\|^2)^{-1}}{\sum_{k \neq l} (1 + \|y_k - y_l\|^2)^{-1}}.
+\end{equation}
+
+La proyección se obtiene minimizando la divergencia de Kullback–Leibler entre ambas distribuciones:
+
+\begin{equation}
+C = \sum_{i \neq j} p_{ij} \log \frac{p_{ij}}{q_{ij}}.
+\end{equation}
+
+t-SNE produce representaciones bidimensionales que reflejan fielmente la estructura local y agrupamientos naturales de los datos.
+
+%------------------------------------------------------------------------------
+\subsubsection{Uniform Manifold Approximation and Projection (UMAP)}
+
+El método \textit{UMAP}, introducido por McInnes et al. \cite{mcinnes2018umap}, se fundamenta en la teoría de variedades y la topología algebraica. Construye un grafo de similitud ponderado para aproximar las relaciones locales entre puntos, y proyecta los datos en un espacio de baja dimensión preservando la estructura global.
+
+Sea $\{x_i\}_{i=1}^n \subset \mathbb{R}^D$, la probabilidad de conexión entre dos puntos se define como:
+
+\begin{equation}
+p_{ij} = \exp\left(-\frac{\|x_i - x_j\| - \rho_i}{\sigma_i}\right),
+\end{equation}
+
+donde $\rho_i$ es la distancia al vecino más cercano y $\sigma_i$ ajusta la densidad local.  
+UMAP optimiza una función de pérdida de entropía cruzada:
+
+\begin{equation}
+C = \sum_{i \neq j} \left[ p_{ij} \log\frac{p_{ij}}{q_{ij}} + (1 - p_{ij}) \log\frac{1 - p_{ij}}{1 - q_{ij}} \right],
+\end{equation}
+
+con $q_{ij} = (1 + a\|y_i - y_j\|^{2b})^{-1}$.  
+Su eficiencia y fidelidad lo convierten en uno de los métodos más robustos para análisis exploratorio y visualización.
+
+%------------------------------------------------------------------------------
+\subsubsection{Spectral Embedding}
+
+El método de \textit{Spectral Embedding}, también conocido como \textit{Laplacian Eigenmaps} \cite{belkin2003laplacian}, utiliza propiedades espectrales del grafo de similitud entre muestras para obtener una representación que preserve la geometría de la variedad subyacente.  
+Sea un grafo $G = (V, E)$ con matriz de pesos $W$, se define el Laplaciano como:
+
+\begin{equation}
+L = D - W,
+\end{equation}
+
+donde $D$ es la matriz diagonal de grados.  
+El objetivo es minimizar:
+
+\begin{equation}
+\min_{Y^\top D Y = I} \; \mathrm{Tr}(Y^\top L Y),
+\end{equation}
+
+cuyo resultado se obtiene resolviendo el problema generalizado de autovalores $L y_i = \lambda_i D y_i$.  
+Los autovectores asociados a los menores autovalores no nulos forman la representación de baja dimensión.
+
+%------------------------------------------------------------------------------
+\subsubsection{Isometric Mapping (ISOMAP)}
+
+\textit{ISOMAP}, propuesto por Tenenbaum et al. \cite{tenenbaum2000isomap}, extiende PCA preservando las distancias geodésicas sobre una variedad no lineal.  
+Primero, se construye un grafo de vecindad conectando cada punto $x_i$ con sus $k$ vecinos más cercanos mediante la distancia euclidiana.  
+Luego, las distancias geodésicas $d_G(x_i, x_j)$ se estiman usando algoritmos como \textit{Dijkstra} o \textit{Floyd–Warshall}.  
+Finalmente, se aplica un escalamiento multidimensional clásico (MDS) sobre la matriz de distancias geodésicas $D_G$, calculando la descomposición espectral:
+
+\begin{equation}
+B = -\frac{1}{2} H D_G^2 H = V \Lambda V^\top,
+\end{equation}
+
+donde $H = I - \frac{1}{n}\mathbf{1}\mathbf{1}^\top$ centra los datos.  
+La proyección final se obtiene como $Y = V_d \Lambda_d^{1/2}$.  
+ISOMAP es especialmente eficaz para representar datos con estructuras de alta no linealidad.
+
+
+
+\subsection{Clasificadores Utilizados}
+Se entrenaron los siguientes modelos sobre los conjuntos reducidos:
+
+
+\subsubsection{Regresión Logística Multinomial}
+La regresión logística multinomial extiende la regresión logística binaria a problemas multiclase. Para $K$ clases, la probabilidad de que una instancia $\mathbf{x}$ pertenezca a la clase $k$ se define como:
+\begin{equation}
+P(\mathbf{y} = k \,|\, \mathbf{x}) = \frac{e^{\mathbf{\beta}_k^T \mathbf{x}}}{1 + \sum_{j=1}^{K-1} e^{\mathbf{\beta}_j^T \mathbf{x}}}
+\label{eq:logistic_prob}
+\end{equation}
+
+donde $\mathbf{\beta}_k$ son los parámetros específicos de la clase $k$. La función de costo con regularización se expresa como:
+\begin{equation}
+J(\mathbf{\beta}) = - \sum_{i=1}^m \sum_{k=1}^K y_{ik} \, \log P(\mathbf{y}_i = k \,|\, \mathbf{x}_i) + \lambda \sum_{k=1}^K \lVert \mathbf{\beta}_k \rVert_p
+\label{eq:logistic_cost}
+\end{equation}
+donde $p \in \{1, 2\}$ define el tipo de regularización (Lasso o Ridge).
+
+\subsubsection{Support Vector Machines}
+Las \textbf{SVM} buscan encontrar el hiperplano óptimo que maximiza el margen entre clases. Para problemas no linealmente separables, se utiliza el \textbf{kernel trick}:
+\begin{equation}
+f(\mathbf{x}) = \operatorname{sign} \Bigg( \sum_{i=1}^m \alpha_i \, y_i \, K(\mathbf{x}_i, \mathbf{x}) + b \Bigg)
+\label{eq:svm_decision}
+\end{equation}
+donde $K(\mathbf{x}_i, \mathbf{x})$ es la función kernel y $\alpha_i$ son los multiplicadores de Lagrange.
+
+\subsubsection{Random Forest}
+    extit{Random Forest} combina múltiples árboles de decisión mediante \textit{bootstrap aggregating} (\textit{bagging}). La predicción final se obtiene mediante votación mayoritaria:
+\begin{equation}
+\hat{y} = \operatorname{mode}\big(\{\hat{h}_1(\mathbf{x}), \, \hat{h}_2(\mathbf{x}), \, \dots, \, \hat{h}_B(\mathbf{x})\}\big)
+\label{eq:rf_mode}
+\end{equation}
+donde $h_b$ es el $b$-ésimo árbol entrenado en una muestra \textit{bootstrap}.
+
+\subsubsection{$K$-Nearest Neighbors}
+KNN clasifica una instancia basándose en la clase mayoritaria de sus $k$ vecinos más cercanos:
+\begin{equation}
+\hat{y} = \arg\max_{c \in \mathcal{Y}} \sum_{i:\, \mathbf{x}_i \in N_k(\mathbf{x})} \mathbb{I}(y_i = c)
+\label{eq:knn_rule}
+\end{equation}
+donde $N_k(\mathbf{x})$ denota el conjunto de $k$ vecinos más cercanos y $\mathbb{I}(\cdot)$ es la función indicadora.
+
+\subsection{Optimización y Búsqueda de Hiperparámetros}
+
+Durante el proceso experimental, la selección de los hiperparámetros óptimos de cada modelo se realizó inicialmente mediante el método \textit{Grid Search} tradicional, el cual evaluaba exhaustivamente todas las combinaciones posibles dentro del espacio definido. Sin embargo, este enfoque resultó altamente costoso en términos computacionales, requiriendo varias horas de ejecución por cada configuración.
+
+Para abordar esta limitación, se implementó posteriormente el método \textit{Halving Grid Search}, una técnica de búsqueda adaptativa que reduce progresivamente el conjunto de configuraciones evaluadas en función de su rendimiento intermedio. Esta estrategia permitió disminuir drásticamente el tiempo de entrenamiento de horas a solo minutos, obteniendo resultados equivalentes en precisión y F1-score respecto al método exhaustivo.
+
+Este cambio metodológico representó una mejora sustancial en la eficiencia del flujo experimental, posibilitando la evaluación de un mayor número de combinaciones de modelos en un tiempo considerablemente menor.
+
+
+
+
+
+
+\section{Métricas de Evaluación}
+
+Se utilizó un conjunto comprehensivo de métricas para evaluar el rendimiento:
+\begin{enumerate}
+    \item Métricas Principales:
+    \begin{itemize}
+        \item \textit{Precision, Recall} y \textit{F1-score} por clase
+        \item \textit{Macro-F1} y \textit{Weighted-F1}
+        \item \textit{Balanced Accuracy}
+    \end{itemize}
+    a) Definiciones formales.: Dadas las predicciones para cada clase $k$:
+    \begin{equation}
+    \operatorname{Precision}_k = \frac{TP_k}{TP_k + FP_k}, \quad \operatorname{Recall}_k = \frac{TP_k}{TP_k + FN_k}
+    \label{eq:precision_recall}
+    \end{equation}
+    \begin{equation}
+    F1_k = 2 \, \cdot \, \frac{\operatorname{Precision}_k \, \cdot \, \operatorname{Recall}_k}{\operatorname{Precision}_k + \operatorname{Recall}_k}
+    \label{eq:f1}
+    \end{equation}
+    Macro-F1 promedia los F1 por clase:
+    \begin{equation}
+    \operatorname{Macro\mbox{-}F1} = \frac{1}{K} \sum_{k=1}^K F1_k
+    \label{eq:macro_f1}
+    \end{equation}
+    Balanced Accuracy:
+    \begin{equation}
+    \operatorname{Balanced\ Accuracy} = \frac{1}{K} \sum_{k=1}^K \frac{TP_k}{TP_k + FN_k}
+    \label{eq:balanced_accuracy}
+    \end{equation}
+\end{enumerate}
+
+Estas métricas permiten evaluar desempeño incluso en datos desbalanceados. Macro-F1 da igual peso a cada clase; Balanced Accuracy promedia sensibilidad por clase.
+
+
+\section{Resultados y Análisis}
+
+En esta sección se presentan los resultados experimentales obtenidos tras aplicar diferentes técnicas de reducción de dimensionalidad combinadas con clasificadores tradicionales.  
+El objetivo fue determinar qué combinación logra el mejor equilibrio entre rendimiento predictivo, estabilidad y eficiencia computacional en el dataset \textit{Fashion-MNIST}.
+
+\subsection{Diseño Experimental}
+
+Se evaluaron seis métodos de reducción de dimensionalidad —\textit{PCA}, \textit{NMF}, \textit{t-SNE}, \textit{UMAP}, \textit{ISOMAP} y \textit{Spectral Embedding}— junto con cuatro clasificadores: \textit{SVM}, \textit{Regresión Logística}, \textit{Random Forest} y \textit{KNN}.  
+Cada modelo se implementó mediante un \textit{pipeline} con búsqueda de hiperparámetros a través de \textit{Grid Search} o \textit{Halving Grid Search} (cv = 3), optimizando el \textit{F1-score macro}.
+
+\begin{table}[H]
+\centering
+\caption{Resumen de combinaciones experimentales evaluadas.}
+\begin{tabular}{lccc}
+    oprule
+    extbf{Reducción Dim.} & \textbf{Clasificador} & \textbf{Validación} & \textbf{Métrica} \\
+\midrule
+\begin{tabular}[c]{@{}l@{}}PCA, NMF, t-SNE,\\ UMAP, ISOMAP,\\ Spectral Embedding\end{tabular}
+& \begin{tabular}[c]{@{}l@{}}SVM, Regresión Logística,\\ Random Forest, KNN\end{tabular}
+& 3-fold CV
+& F1-macro \\
+\bottomrule
+\end{tabular}
+\label{tab:combos}
+\end{table}
+
+\subsection{Resultados por Técnica de Reducción}
+
+A continuación se presentan los resultados promedio de cada combinación, destacando los mejores modelos por técnica.
+
+\begin{table}[H]
+\centering
+\caption{Resumen de resultados: PCA}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Modelo} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
+\midrule
+\textbf{PCA + SVM} & \textbf{0.9007} & \textbf{0.9002} & \textbf{0.9007} & \textbf{0.9003} \\
+PCA + Reg. Logística & 0.8452 & 0.8438 & 0.8452 & 0.8441 \\
+PCA + Random Forest & 0.8586 & 0.8572 & 0.8586 & 0.8570 \\
+PCA + KNN & 0.8651 & 0.8675 & 0.8651 & 0.8658 \\
+\bottomrule
+\end{tabular}
+\label{tab:pca}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Resumen de resultados: NMF}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Modelo} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
+\midrule
+NMF + SVM & 0.8420 & 0.8412 & 0.8420 & 0.8413 \\
+NMF + Reg. Logística & 0.7748 & 0.7717 & 0.7748 & 0.7726 \\
+\textbf{NMF + Random Forest} & \textbf{0.8721} & \textbf{0.8711} & \textbf{0.8721} & \textbf{0.8708} \\
+NMF + KNN & 0.8147 & 0.8150 & 0.8147 & 0.8141 \\
+\bottomrule
+\end{tabular}
+\label{tab:nmf}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Resumen de resultados: t-SNE}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Modelo} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
+\midrule
+t-SNE + SVM & 0.7306 & 0.7260 & 0.7306 & 0.7248 \\
+t-SNE + Reg. Logística & 0.7191 & 0.7142 & 0.7191 & 0.7140 \\
+\textbf{t-SNE + Random Forest} & \textbf{0.7519} & \textbf{0.7471} & \textbf{0.7519} & \textbf{0.7468} \\
+t-SNE + KNN & 0.7389 & 0.7360 & 0.7389 & 0.7356 \\
+\bottomrule
+\end{tabular}
+\label{tab:tsne}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Resumen de resultados: UMAP}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Modelo} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
+\midrule
+\textbf{UMAP + SVM} & \textbf{0.8234} & \textbf{0.8312} & \textbf{0.8234} & \textbf{0.8252} \\
+UMAP + Reg. Logística & 0.8174 & 0.8243 & 0.8174 & 0.8186 \\
+UMAP + Random Forest & 0.8177 & 0.8247 & 0.8177 & 0.8191 \\
+UMAP + KNN & 0.8188 & 0.8252 & 0.8188 & 0.8198 \\
+\bottomrule
+\end{tabular}
+\label{tab:umap}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Resumen de resultados: ISOMAP}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Modelo} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
+\midrule
+\textbf{ISOMAP + SVM} & \textbf{0.8166} & \textbf{0.8171} & \textbf{0.8166} & \textbf{0.8165} \\
+ISOMAP + Reg. Logística & 0.7915 & 0.7912 & 0.7915 & 0.7908 \\
+ISOMAP + Random Forest & 0.8095 & 0.8113 & 0.8095 & 0.8098 \\
+ISOMAP + KNN & 0.7994 & 0.8034 & 0.7994 & 0.8005 \\
+\bottomrule
+\end{tabular}
+\label{tab:isomap}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Resumen de resultados: Spectral Embedding}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Modelo} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
+\midrule
+Spectral + SVM & 0.7041 & 0.7056 & 0.7041 & 0.6994 \\
+Spectral + Reg. Logística & 0.7161 & 0.7220 & 0.7161 & 0.7166 \\
+Spectral + Random Forest & 0.7418 & 0.7511 & 0.7418 & 0.7451 \\
+Spectral + KNN & 0.6985 & 0.7204 & 0.6985 & 0.7047 \\
+\bottomrule
+\end{tabular}
+\label{tab:spectral}
+\end{table}
+
+\textbf{Los resultados muestran que} \textit{PCA} \textbf{fue la técnica más efectiva} para la clasificación de imágenes de moda. En combinación con \textit{SVM} alcanzó un \textbf{F1-Score de 0.9003}, destacando por su alta precisión y estabilidad. Su capacidad para maximizar la varianza global permitió que incluso clasificadores más simples como \textit{KNN} o \textit{Random Forest} mantuvieran un buen desempeño, aunque con un mayor costo computacional.\\
+
+\textit{NMF} obtuvo resultados competitivos (\textbf{F1-Score de 0.8708} con \textit{Random Forest}), ofreciendo una interpretación más intuitiva y una ejecución más rápida que \textit{PCA}, por lo que se considera una alternativa eficiente y comprensible.\\
+
+Entre las técnicas no lineales, \textit{t-SNE} mostró un rendimiento limitado ($\approx$\textbf{0.74 F1}) pese a su utilidad para visualizar estructuras locales, mientras que \textit{UMAP} logró un mejor equilibrio entre rendimiento y eficiencia, alcanzando un \textbf{F1-Score de 0.8252} y siendo la técnica \textbf{más rápida} ($\approx$3.6 minutos en promedio).\\
+
+Finalmente, \textit{ISOMAP} y \textit{Spectral Embedding} obtuvieron resultados moderados, con \textbf{F1-Scores} alrededor de 0.80 y 0.70 respectivamente. En general, \textit{PCA + SVM} se consolida como la combinación \textbf{más precisa y estable}, mientras que \textit{UMAP} destaca por su \textbf{eficiencia temporal}.\\
+
+\subsection{Análisis de Matriz de Confusión}
+
+\begin{figure}[H]
+\centering
+\includesvg[width=0.50\textwidth]{matriz_confusion_pca_svm_normalizada.svg}
+\caption{Matriz de confusión normalizada del modelo PCA + SVM.}
+\label{fig:matriz_confusion}
+\end{figure}
+
+La matriz de confusión muestra un alto nivel de precisión en las clases con siluetas bien definidas (\textit{Trouser}, \textit{Bag}, \textit{Ankle boot}), mientras que las confusiones más frecuentes ocurrieron entre prendas superiores (\textit{T-shirt}, \textit{Pullover}, \textit{Shirt}), tal como anticipaba el análisis exploratorio inicial.
+
+\subsection{Visualización en Espacios 2D}
+
+Con el objetivo de analizar cómo cada técnica de reducción de dimensionalidad representa la estructura intrínseca del conjunto \textit{Fashion-MNIST}, se generaron proyecciones bidimensionales utilizando las seis técnicas implementadas.  
+
+Las Figuras~\ref{fig:2d_pca}–\ref{fig:2d_isomap} muestran la distribución de las diez clases en el espacio reducido, evidenciando diferencias significativas en la preservación de vecindarios y la separabilidad de las clases.
+
+\begin{figure}[!htbp]
+\centering
+\includesvg[width=0.45\linewidth]{pca_2d_projection.svg}
+\vspace{-1mm}
+\caption{Proyección 2D obtenida mediante PCA. Se observan agrupamientos parciales con buena separación global.}
+\label{fig:2d_pca}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includesvg[width=0.45\linewidth]{nmf_2d_projection.svg}
+\vspace{-1mm}
+\caption{Proyección 2D obtenida mediante NMF. Se aprecia menor separación entre clases, coherente con su naturaleza aditiva.}
+\label{fig:2d_nmf}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includesvg[width=0.45\linewidth]{tsne_2d_projection.svg}
+\vspace{-1mm}
+\caption{Proyección 2D obtenida mediante t-SNE. Destaca la preservación de estructuras locales y agrupamientos bien definidos.}
+\label{fig:2d_tsne}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includesvg[width=0.45\linewidth]{umap_2d_projection.svg}
+\vspace{-1mm}
+\caption{Proyección 2D mediante UMAP. Muestra equilibrio entre estructura local y global con separación clara entre clases.}
+\label{fig:2d_umap}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includesvg[width=0.45\linewidth]{spectral_2d_projection.svg}
+\vspace{-1mm}
+\caption{Proyección 2D mediante Spectral Embedding. Agrupamientos más difusos, indicando preservación parcial de la estructura.}
+\label{fig:2d_spectral}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includesvg[width=0.45\linewidth]{isomap_2d_projection.svg}
+\vspace{-1mm}
+\caption{Proyección 2D obtenida mediante ISOMAP. Se observa conservación parcial de distancias geodésicas y separación entre clases.}
+\label{fig:2d_isomap}
+\end{figure}
+
+% Asegura que todas las figuras de esta subsección aparezcan antes de continuar
+\FloatBarrier
+
+
+\subsection{Comparación General de Métodos de Reducción de Dimensionalidad}
+
+La Tabla~\ref{tab:tiempos_dim} resume la eficiencia computacional promedio de cada técnica durante la búsqueda de hiperparámetros (Grid Search o Halving Grid Search, cv = 3).  
+Los tiempos representan el proceso completo de entrenamiento y validación.
+
+\begin{table}[H]
+\centering
+\caption{Comparativa de eficiencia computacional por método de reducción de dimensionalidad.}
+\label{tab:tiempos_dim}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Método} & \textbf{Prom. (min)} & \textbf{Mín.} & \textbf{Máx.} & \textbf{Tipo de Búsqueda} \\
+\midrule
+PCA & 46.4 & 4.3 & 133.1 & Grid / Halving \\
+NMF & 16.7 & 7.2 & 22.6 & Halving \\
+UMAP & 3.6 & 2.6 & 4.9 & Halving \\
+Isomap* & 7.0 & 6.3 & 7.4 & Halving \\
+t-SNE & 10.6 & 5.8 & 14.1 & Halving \\
+\bottomrule
+\end{tabular}
+
+\raggedright
+\footnotesize *Isomap se evaluó sobre un subconjunto de 15,000 muestras; los tiempos no son directamente comparables con los demás métodos.
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includesvg[width=0.50\textwidth]{modelos_mas_rapidos_por_tecnica.svg}
+\caption{Comparación del tiempo de entrenamiento promedio por técnica de reducción.}
+\label{fig:tiempos_modelos}
+\end{figure}
+
+
+Los resultados evidencian que:
+
+\begin{itemize}
+    \item \textbf{UMAP} fue el método más eficiente (3.6 min promedio), con tiempos estables y escalabilidad sobresaliente.
+    \item \textbf{PCA} fue el más costoso (46.4 min), debido al uso de \textit{Grid Search} exhaustivo en PCA+SVM; sin embargo, al usar \textit{Halving Grid Search}, el tiempo bajó a menos de 5 min sin pérdida de rendimiento.
+    \item \textbf{NMF} y \textbf{t-SNE} tuvieron rendimientos intermedios (16.7 y 10.6 min), mientras que \textbf{Isomap} aparenta ser eficiente por haberse ejecutado en un subconjunto reducido.
+\end{itemize}
+
+El método \textbf{Halving Grid Search} redujo los tiempos de búsqueda en más del 90\% respecto al enfoque exhaustivo, manteniendo los mismos resultados en precisión y F1-score.  
+Esto permitió evaluar más configuraciones en menor tiempo y con igual calidad de resultados.
+
+\subsection{Comparación Global de los Mejores Modelos}
+
+\begin{table}[!htbp]
+\centering
+\caption{Comparativa global de los mejores modelos por técnica.}
+{\small\setlength{\tabcolsep}{4pt}%
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcccc}
+	oprule
+	extbf{Reducción Dim.} & \textbf{Mejor Clasificador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Std (CV)} \\
+\midrule
+PCA & SVM (RBF, C=10, $\gamma$=scale) & \textbf{0.9007} & \textbf{0.9003} & 0.0028 \\
+NMF & Random Forest & 0.8721 & 0.8708 & 0.0035 \\
+UMAP & SVM (RBF) & 0.8234 & 0.8252 & 0.0041 \\
+t-SNE & Random Forest & 0.7519 & 0.7468 & 0.0057 \\
+ISOMAP & SVM (RBF) & 0.8166 & 0.8165 & 0.0048 \\
+\bottomrule
+\end{tabular}%
+}% end resizebox
+}
+\label{tab:mejores}
+\end{table}
+
+
+\begin{figure}[!htbp]
+\centering
+\includesvg[width=0.98\columnwidth]{top5_models.svg}
+\vspace{-2mm}
+\caption{Comparación del F1-score de los mejores modelos por técnica de reducción de dimensionalidad.}
+\label{fig:mejores_modelos}
+\end{figure}
+
+
+
+
+Los resultados muestran que la combinación \textbf{PCA + SVM} alcanzó el mejor desempeño global, con un \textit{F1-score} de 0.9003 y estabilidad alta (desviación estándar 0.0028).  
+Por otro lado, \textbf{NMF + Random Forest} destacó como modelo alternativo con buena interpretabilidad y rendimiento competitivo, mientras que \textbf{UMAP + SVM} fue la opción más eficiente en tiempo.
+
+
+
+\subsection{Visualización y Análisis de Errores}
+
+\begin{figure}[H]
+\centering
+\includesvg[width=0.50\textwidth]{matriz_confusion_pca_svm_normalizada.svg}
+\caption{Matriz de confusión normalizada del modelo PCA + SVM.}
+\label{fig:matriz_confusion}
+\end{figure}
+
+
+
+
+
+La matriz de confusión muestra un alto nivel de precisión en las clases con siluetas bien definidas (\textit{Trouser}, \textit{Bag}, \textit{Ankle boot}), mientras que las confusiones más frecuentes ocurrieron entre prendas superiores (\textit{T-shirt}, \textit{Pullover}, \textit{Shirt}), tal como anticipaba el análisis exploratorio inicial.
+
+\subsection{Conclusiones}
+
+Este estudio realizó un análisis comparativo exhaustivo de seis técnicas de reducción de dimensionalidad combinadas con cuatro modelos de clasificación clásicos, aplicados al \textit{dataset} \textit{Fashion-MNIST}. Los resultados obtenidos permiten extraer conclusiones significativas tanto a nivel de rendimiento predictivo como de eficiencia computacional.
+
+\begin{enumerate}
+
+    \item \textbf{Superioridad de la Combinación \textit{PCA} + \textit{SVM}} \\
+    El hallazgo principal de este trabajo es el rendimiento superior de la combinación de Análisis de Componentes Principales (\textit{PCA}) con una Máquina de Soporte Vectorial (\textit{SVM}). Este par alcanzó el \textit{F1-score} más alto (0.9003) con una notable estabilidad (desviación estándar de 0.0028), posicionándose como la solución más precisa y robusta para este problema de clasificación.
+    
+    La sinergia entre estos dos métodos es la clave de su éxito. \textit{PCA}, al ser una técnica lineal que maximiza la varianza global, actúa como un potente extractor de características. Posteriormente, el clasificador \textit{SVM}, diseñado para encontrar el hiperplano de separación óptimo, opera con una eficiencia y precisión excepcionales en este espacio de características ya depurado.
+    
+    El modelo clasifica con gran acierto clases con siluetas muy definidas como \texttt{Trouser}, \texttt{Bag} y \texttt{Ankle boot}. Las confusiones, aunque mínimas, ocurren de manera predecible entre categorías visualmente similares, como las prendas de la parte superior del cuerpo (\texttt{T-shirt/top}, \texttt{Shirt}, \texttt{Pullover} y \texttt{Coat}).
+
+    % --- ¡IMPORTANTE! ---
+    % Asegúrate de que en tu código, la figura de la matriz de confusión de PCA+SVM tenga la etiqueta: \label{fig:matriz_confusion_pca_svm}
+
+    \item \textbf{El Rol de las Técnicas No Lineales y sus \textit{Trade-offs}} \\
+    Técnicas no lineales como \textit{UMAP} y \textit{t-SNE} demostraron ser herramientas excepcionales para la visualización (Figuras~\ref{fig:tsne_2d_projection} y \ref{fig:umap_2d_projection}). Sin embargo, su enfoque en la preservación de la estructura local no se tradujo en el mayor rendimiento de clasificación. Esto sugiere que la estructura global de la varianza capturada por \textit{PCA} es más informativa para los clasificadores en este problema.
+    
+    No obstante, \textbf{\textit{UMAP} destacó como el método más eficiente computacionalmente}, siendo una opción ideal para escenarios de prototipado rápido o cuando la velocidad de experimentación es el factor crítico.
+    
+    % --- ¡IMPORTANTE! ---
+    % Asegúrate de etiquetar tus figuras de t-SNE y UMAP con:
+    % \label{fig:tsne_viz} y \label{fig:umap_viz} respectivamente.
+
+    \item \textbf{Eficiencia y Optimización de Hiperparámetros} \\
+    Un hallazgo metodológico crucial fue el impacto de la optimización de hiperparámetros. El uso de \textit{Halving Grid Search} permitió reducir los tiempos de entrenamiento en más de un 90\% en comparación con un \textit{Grid Search} exhaustivo, sin sacrificar el rendimiento predictivo. Esto subraya la importancia de emplear estrategias de búsqueda eficientes para hacer viables modelos computacionalmente intensivos.
+
+    \item \textbf{Conclusión Final y Trabajos Futuros} \\
+    En resumen, este estudio demuestra que para la clasificación de imágenes en \textit{Fashion-MNIST}, una técnica lineal como \textbf{\textit{PCA} sigue siendo una herramienta extraordinariamente potente, especialmente cuando se combina con un clasificador robusto como \textit{SVM}}. Mientras que los métodos no lineales son superiores para la visualización y la eficiencia, la maximización de la varianza global de \textit{PCA} proporciona el espacio de características más propicio para una clasificación precisa.
+
+    Como trabajo futuro, sería interesante explorar el uso de estas representaciones de baja dimensión como entrada para redes neuronales convolucionales simples (\textit{CNNs}) para evaluar si pueden acelerar el entrenamiento manteniendo la alta precisión de los modelos de \textit{deep learning}.
+
+\end{enumerate}
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
