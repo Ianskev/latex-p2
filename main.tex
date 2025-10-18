@@ -18,10 +18,11 @@
 % Evitar que las figuras atraviesen subsecciones
 \usepackage[section]{placeins}
 % Compactar levemente espacios entre floats (figuras/tablas)
-\setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
-\setlength{\floatsep}{8pt plus 2pt minus 2pt}
-\setlength{\intextsep}{8pt plus 2pt minus 2pt}
-\setlength{\abovecaptionskip}{3pt plus 1pt minus 1pt}
+% Compactar separación vertical de floats y captions
+\setlength{\textfloatsep}{4pt plus 1pt minus 1pt}   % entre floats y texto
+\setlength{\floatsep}{4pt plus 1pt minus 1pt}       % entre floats consecutivos
+\setlength{\intextsep}{4pt plus 1pt minus 1pt}      % para floats en el texto
+\setlength{\abovecaptionskip}{2pt plus 1pt minus 1pt}
 \setlength{\belowcaptionskip}{0pt}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
@@ -331,7 +332,7 @@ f(\mathbf{x}) = \operatorname{sign} \Bigg( \sum_{i=1}^m \alpha_i \, y_i \, K(\ma
 donde $K(\mathbf{x}_i, \mathbf{x})$ es la función kernel y $\alpha_i$ son los multiplicadores de Lagrange.
 
 \subsubsection{Random Forest}
-    extit{Random Forest} combina múltiples árboles de decisión mediante \textit{bootstrap aggregating} (\textit{bagging}). La predicción final se obtiene mediante votación mayoritaria:
+    	extit{Random Forest} combina múltiples árboles de decisión mediante \textit{bootstrap aggregating} (\textit{bagging}). La predicción final se obtiene mediante votación mayoritaria:
 \begin{equation}
 \hat{y} = \operatorname{mode}\big(\{\hat{h}_1(\mathbf{x}), \, \hat{h}_2(\mathbf{x}), \, \dots, \, \hat{h}_B(\mathbf{x})\}\big)
 \label{eq:rf_mode}
@@ -406,9 +407,11 @@ Cada modelo se implementó mediante un \textit{pipeline} con búsqueda de hiperp
 \begin{table}[H]
 \centering
 \caption{Resumen de combinaciones experimentales evaluadas.}
+\setlength{\tabcolsep}{4pt}
+\resizebox{\columnwidth}{!}{
 \begin{tabular}{lccc}
-    oprule
-    extbf{Reducción Dim.} & \textbf{Clasificador} & \textbf{Validación} & \textbf{Métrica} \\
+    	oprule
+    	extbf{Reducción Dim.} & \textbf{Clasificador} & \textbf{Validación} & \textbf{Métrica} \\
 \midrule
 \begin{tabular}[c]{@{}l@{}}PCA, NMF, t-SNE,\\ UMAP, ISOMAP,\\ Spectral Embedding\end{tabular}
 & \begin{tabular}[c]{@{}l@{}}SVM, Regresión Logística,\\ Random Forest, KNN\end{tabular}
@@ -416,6 +419,7 @@ Cada modelo se implementó mediante un \textit{pipeline} con búsqueda de hiperp
 & F1-macro \\
 \bottomrule
 \end{tabular}
+}
 \label{tab:combos}
 \end{table}
 
@@ -438,6 +442,7 @@ PCA + KNN & 0.8651 & 0.8675 & 0.8651 & 0.8658 \\
 \end{tabular}
 \label{tab:pca}
 \end{table}
+\vspace{-6pt}
 
 \begin{table}[H]
 \centering
@@ -454,6 +459,7 @@ NMF + KNN & 0.8147 & 0.8150 & 0.8147 & 0.8141 \\
 \end{tabular}
 \label{tab:nmf}
 \end{table}
+\vspace{-6pt}
 
 \begin{table}[H]
 \centering
@@ -470,6 +476,7 @@ t-SNE + KNN & 0.7389 & 0.7360 & 0.7389 & 0.7356 \\
 \end{tabular}
 \label{tab:tsne}
 \end{table}
+\vspace{-6pt}
 
 \begin{table}[H]
 \centering
@@ -486,6 +493,7 @@ UMAP + KNN & 0.8188 & 0.8252 & 0.8188 & 0.8198 \\
 \end{tabular}
 \label{tab:umap}
 \end{table}
+\vspace{-6pt}
 
 \begin{table}[H]
 \centering
@@ -502,6 +510,7 @@ ISOMAP + KNN & 0.7994 & 0.8034 & 0.7994 & 0.8005 \\
 \end{tabular}
 \label{tab:isomap}
 \end{table}
+\vspace{-6pt}
 
 \begin{table}[H]
 \centering
@@ -512,32 +521,86 @@ ISOMAP + KNN & 0.7994 & 0.8034 & 0.7994 & 0.8005 \\
 \midrule
 Spectral + SVM & 0.7041 & 0.7056 & 0.7041 & 0.6994 \\
 Spectral + Reg. Logística & 0.7161 & 0.7220 & 0.7161 & 0.7166 \\
-Spectral + Random Forest & 0.7418 & 0.7511 & 0.7418 & 0.7451 \\
+\textbf{Spectral + Random Forest} & \textbf{0.7418} & \textbf{0.7511} & \textbf{0.7418} & \textbf{0.7451} \\
 Spectral + KNN & 0.6985 & 0.7204 & 0.6985 & 0.7047 \\
 \bottomrule
 \end{tabular}
 \label{tab:spectral}
 \end{table}
+\vspace{-6pt}
 
-\textbf{Los resultados muestran que} \textit{PCA} \textbf{fue la técnica más efectiva} para la clasificación de imágenes de moda. En combinación con \textit{SVM} alcanzó un \textbf{F1-Score de 0.9003}, destacando por su alta precisión y estabilidad. Su capacidad para maximizar la varianza global permitió que incluso clasificadores más simples como \textit{KNN} o \textit{Random Forest} mantuvieran un buen desempeño, aunque con un mayor costo computacional.\\
+	\textbf{Los resultados muestran que} \textit{PCA} \textbf{fue la técnica más efectiva} para la clasificación de imágenes de moda. En combinación con \textit{SVM} alcanzó un \textbf{F1-Score de 0.9003}, destacando por su alta precisión y estabilidad. Su capacidad para maximizar la varianza global permitió que incluso clasificadores más simples como \textit{KNN} o \textit{Random Forest} mantuvieran un buen desempeño, aunque con un mayor costo computacional.
 
-\textit{NMF} obtuvo resultados competitivos (\textbf{F1-Score de 0.8708} con \textit{Random Forest}), ofreciendo una interpretación más intuitiva y una ejecución más rápida que \textit{PCA}, por lo que se considera una alternativa eficiente y comprensible.\\
+\vspace{2pt}
+	\textit{NMF} obtuvo resultados competitivos (\textbf{F1-Score de 0.8708} con \textit{Random Forest}), ofreciendo una interpretación más intuitiva y una ejecución más rápida que \textit{PCA}, por lo que se considera una alternativa eficiente y comprensible.
 
-Entre las técnicas no lineales, \textit{t-SNE} mostró un rendimiento limitado ($\approx$\textbf{0.74 F1}) pese a su utilidad para visualizar estructuras locales, mientras que \textit{UMAP} logró un mejor equilibrio entre rendimiento y eficiencia, alcanzando un \textbf{F1-Score de 0.8252} y siendo la técnica \textbf{más rápida} ($\approx$3.6 minutos en promedio).\\
+\vspace{2pt}
+Entre las técnicas no lineales, \textit{t-SNE} mostró un rendimiento limitado ($\approx$\textbf{0.74 F1}) pese a su utilidad para visualizar estructuras locales, mientras que \textit{UMAP} logró un mejor equilibrio entre rendimiento y eficiencia, alcanzando un \textbf{F1-Score de 0.8252} y siendo la técnica \textbf{más rápida} ($\approx$3.6 minutos en promedio).
 
-Finalmente, \textit{ISOMAP} y \textit{Spectral Embedding} obtuvieron resultados moderados, con \textbf{F1-Scores} alrededor de 0.80 y 0.70 respectivamente. En general, \textit{PCA + SVM} se consolida como la combinación \textbf{más precisa y estable}, mientras que \textit{UMAP} destaca por su \textbf{eficiencia temporal}.\\
+\vspace{2pt}
+Finalmente, \textit{ISOMAP} y \textit{Spectral Embedding} obtuvieron resultados moderados, con \textbf{F1-Scores} alrededor de 0.80 y 0.70 respectivamente. En general, \textit{PCA + SVM} se consolida como la combinación \textbf{más precisa y estable}, mientras que \textit{UMAP} destaca por su \textbf{eficiencia temporal}.
+
 
 \subsection{Análisis de Matriz de Confusión}
+En este estudio se evaluaron seis técnicas de reducción de dimensionalidad —\textit{PCA}, \textit{NMF}, \textit{t-SNE}, \textit{UMAP}, \textit{Isomap} y \textit{Spectral Embedding}— combinadas con cuatro modelos de clasificación: \textit{Regresión Logística Multinomial}, \textit{Support Vector Machine (SVM)}, \textit{Random Forest} y \textit{K-Nearest Neighbors (KNN)}.
 
-\begin{figure}[H]
+Cada figura presenta la \textbf{matriz de confusión normalizada} correspondiente al mejor modelo obtenido por técnica de reducción, mostrando los patrones de acierto y error entre las diferentes clases del conjunto \textit{Fashion-MNIST}.
+
+\begin{figure}[!htbp]
 \centering
-\includesvg[width=0.50\textwidth]{matriz_confusion_pca_svm_normalizada.svg}
+\includesvg[width=0.34\textwidth]{matriz_confusion_pca_svm_normalizada.svg}
 \caption{Matriz de confusión normalizada del modelo PCA + SVM.}
 \label{fig:matriz_confusion}
+\vspace{1.2mm}
+\parbox{0.95\columnwidth}{\footnotesize\raggedright La matriz de confusión muestra un alto nivel de precisión en las clases con siluetas bien definidas (\textit{Trouser}, \textit{Bag}, \textit{Ankle boot}), mientras que las confusiones más frecuentes ocurrieron entre prendas superiores (\textit{T-shirt}, \textit{Pullover}, \textit{Shirt}), tal como anticipaba el análisis exploratorio inicial.}
 \end{figure}
 
-La matriz de confusión muestra un alto nivel de precisión en las clases con siluetas bien definidas (\textit{Trouser}, \textit{Bag}, \textit{Ankle boot}), mientras que las confusiones más frecuentes ocurrieron entre prendas superiores (\textit{T-shirt}, \textit{Pullover}, \textit{Shirt}), tal como anticipaba el análisis exploratorio inicial.
+\begin{figure}[!htbp]
+\centering
+\includesvg[width=0.34\textwidth]{confusion_matrix_normalized_NMF.svg}
+\caption{Matriz de confusión normalizada del modelo NMF + Random Forest.}
+\label{fig:matriz_confusion_nmf}
+\vspace{1.2mm}
+\parbox{0.95\columnwidth}{\footnotesize\raggedright En \textit{NMF + Random Forest} se observa una diagonal dominante en la mayoría de clases, coherente con su F1 competitivo. Persisten confusiones entre prendas superiores (\textit{T-shirt}, \textit{Pullover}, \textit{Shirt}) y, en menor medida, entre \textit{Coat} y \textit{Pullover}, lo que sugiere que las representaciones por partes de NMF capturan bien patrones globales pero aún mezclan texturas y cortes similares.}
+\end{figure}
 
+\begin{figure}[!htbp]
+\centering
+\includesvg[width=0.34\textwidth]{confusion_matrix_normalized_TSNE_RF.svg}
+\caption{Matriz de confusión normalizada del modelo t-SNE + Random Forest.}
+\label{fig:matriz_confusion_tsne_rf}
+\vspace{1.2mm}
+\parbox{0.95\columnwidth}{\footnotesize\raggedright Para \textit{t-SNE + Random Forest}, el rendimiento global es menor y la matriz refleja mayor masa fuera de la diagonal en clases visualmente parecidas (\textit{T-shirt}, \textit{Shirt}, \textit{Pullover}, \textit{Dress}). Aun así, categorías con siluetas distintivas como \textit{Trouser}, \textit{Sneaker} y \textit{Ankle boot} mantienen buenas tasas de acierto.}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includesvg[width=0.34\textwidth]{confusion_matrix_normalized_UMAP_SVM.svg}
+\caption{Matriz de confusión normalizada del modelo UMAP + SVM.}
+\label{fig:matriz_confusion_umap_svm}
+\vspace{1.2mm}
+\parbox{0.95\columnwidth}{\footnotesize\raggedright En \textit{UMAP + SVM} se aprecia una diagonal más definida que en \textit{t-SNE}, con aciertos consistentes en \textit{Trouser}, \textit{Sneaker} y \textit{Ankle boot}. Las confusiones se concentran en prendas superiores, aunque con menor intensidad, alineado con su mejor balance entre precisión y eficiencia temporal.}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includesvg[width=0.34\textwidth]{confusion_matrix_normalized_Isomap_SVM.svg}
+\caption{Matriz de confusión normalizada del modelo Isomap + SVM.}
+\label{fig:matriz_confusion_isomap_svm}
+\vspace{1.2mm}
+\parbox{0.95\columnwidth}{\footnotesize\raggedright El modelo \textit{Isomap + SVM} muestra desempeño intermedio: aciertos altos en clases con contornos claros (\textit{Trouser}, \textit{Bag}, \textit{Ankle boot}) y confusiones notables entre \textit{Pullover}, \textit{Shirt} y \textit{Coat}. Esto sugiere sensibilidad a la construcción del grafo y a la estimación de distancias geodésicas.}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includesvg[width=0.34\textwidth]{confusion_matrix_normalized_Spectral_RF.svg}
+\caption{Matriz de confusión normalizada del modelo Spectral Embedding + Random Forest.}
+\label{fig:matriz_confusion_spectral_rf}
+\vspace{1.2mm}
+\parbox{0.95\columnwidth}{\footnotesize\raggedright En \textit{Spectral Embedding + Random Forest} la diagonal es menos marcada y el error se distribuye más entre clases, en especial entre categorías superiores. Aun así, \textit{Trouser} y \textit{Bag} conservan precisión razonable; la técnica parece no preservar fronteras de clase tan nítidas para este problema.}
+\end{figure}
+
+\FloatBarrier
 \subsection{Visualización en Espacios 2D}
 
 Con el objetivo de analizar cómo cada técnica de reducción de dimensionalidad representa la estructura intrínseca del conjunto \textit{Fashion-MNIST}, se generaron proyecciones bidimensionales utilizando las seis técnicas implementadas.  
@@ -546,50 +609,62 @@ Las Figuras~\ref{fig:2d_pca}–\ref{fig:2d_isomap} muestran la distribución de 
 
 \begin{figure}[!htbp]
 \centering
-\includesvg[width=0.45\linewidth]{pca_2d_projection.svg}
+\includesvg[width=0.48\linewidth]{pca_2d_projection.svg}
 \vspace{-1mm}
 \caption{Proyección 2D obtenida mediante PCA. Se observan agrupamientos parciales con buena separación global.}
 \label{fig:2d_pca}
+\vspace{0.2mm}
+\parbox{0.95\columnwidth}{\footnotesize\raggedright PCA (2D): Se ven nubes relativamente compactas y con buena separación global; las clases de silueta marcada (\textit{Trouser}, \textit{Bag}, \textit{Ankle boot}) aparecen más limpias. Aun así, las fronteras entre prendas superiores se ``tocan'', lo que sugiere que la proyección capta bien la varianza global pero no todos los matices de textura/corte.}
 \end{figure}
 
 \begin{figure}[!htbp]
 \centering
-\includesvg[width=0.45\linewidth]{nmf_2d_projection.svg}
+\includesvg[width=0.48\linewidth]{nmf_2d_projection.svg}
 \vspace{-1mm}
 \caption{Proyección 2D obtenida mediante NMF. Se aprecia menor separación entre clases, coherente con su naturaleza aditiva.}
 \label{fig:2d_nmf}
+\vspace{0.2mm}
+\parbox{0.95\columnwidth}{\footnotesize\raggedright NMF (2D): La proyección resalta ``partes'' aditivas; aparecen agrupamientos entendibles pero menos nítidos. Las clases se distinguen por rasgos dominantes, aunque las de parte superior tienden a mezclarse ligeramente, señal de que faltan detalles finos para separarlas mejor.}
 \end{figure}
 
 \begin{figure}[!htbp]
 \centering
-\includesvg[width=0.45\linewidth]{tsne_2d_projection.svg}
+\includesvg[width=0.48\linewidth]{tsne_2d_projection.svg}
 \vspace{-1mm}
 \caption{Proyección 2D obtenida mediante t-SNE. Destaca la preservación de estructuras locales y agrupamientos bien definidos.}
 \label{fig:2d_tsne}
+\vspace{0.2mm}
+\parbox{0.95\columnwidth}{\footnotesize\raggedright t-SNE (2D): Forma clústeres locales bien definidos y visualmente llamativos, ideales para explorar vecindarios y detectar subgrupos. Sin embargo, las distancias entre clústeres no son globalmente fiables; dos grupos pueden verse lejos sin que eso implique mayor separabilidad para un clasificador.}
 \end{figure}
 
 \begin{figure}[!htbp]
 \centering
-\includesvg[width=0.45\linewidth]{umap_2d_projection.svg}
+\includesvg[width=0.48\linewidth]{umap_2d_projection.svg}
 \vspace{-1mm}
 \caption{Proyección 2D mediante UMAP. Muestra equilibrio entre estructura local y global con separación clara entre clases.}
 \label{fig:2d_umap}
+\vspace{0.2mm}
+\parbox{0.95\columnwidth}{\footnotesize\raggedright UMAP (2D): Muestra un balance más estable entre estructura local y global: clústeres definidos pero con relaciones entre grupos más coherentes que en t-SNE. Es útil para inspección rápida y suele conservar patrones globales que ayudan a entender por qué ciertas clases se confunden.}
 \end{figure}
 
 \begin{figure}[!htbp]
 \centering
-\includesvg[width=0.45\linewidth]{spectral_2d_projection.svg}
+\includesvg[width=0.48\linewidth]{spectral_2d_projection.svg}
 \vspace{-1mm}
 \caption{Proyección 2D mediante Spectral Embedding. Agrupamientos más difusos, indicando preservación parcial de la estructura.}
 \label{fig:2d_spectral}
+\vspace{0.2mm}
+\parbox{0.95\columnwidth}{\footnotesize\raggedright Spectral Embedding (2D): Tiende a generar agrupamientos más difusos; se preserva parte de la geometría del grafo, pero aparecen solapes en clases parecidas. Es útil para detectar ``formas'' del manifold, aunque no siempre ofrece bordes claros entre categorías cercanas.}
 \end{figure}
 
 \begin{figure}[!htbp]
 \centering
-\includesvg[width=0.45\linewidth]{isomap_2d_projection.svg}
+\includesvg[width=0.48\linewidth]{isomap_2d_projection.svg}
 \vspace{-1mm}
 \caption{Proyección 2D obtenida mediante ISOMAP. Se observa conservación parcial de distancias geodésicas y separación entre clases.}
 \label{fig:2d_isomap}
+\vspace{0.2mm}
+\parbox{0.95\columnwidth}{\footnotesize\raggedright ISOMAP (2D): Mantiene cierto orden geodésico y puede separar clases con trayectorias distintas en la variedad, pero en 2D aparecen solapes cuando hay ruido o texturas similares (por ejemplo, prendas superiores). Es más revelador sobre la geometría global que sobre los detalles finos intraclase.}
 \end{figure}
 
 % Asegura que todas las figuras de esta subsección aparezcan antes de continuar
@@ -648,8 +723,8 @@ Esto permitió evaluar más configuraciones en menor tiempo y con igual calidad 
 {\small\setlength{\tabcolsep}{4pt}%
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{lcccc}
-	oprule
-	extbf{Reducción Dim.} & \textbf{Mejor Clasificador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Std (CV)} \\
+    	oprule
+    	extbf{Reducción Dim.} & \textbf{Mejor Clasificador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Std (CV)} \\
 \midrule
 PCA & SVM (RBF, C=10, $\gamma$=scale) & \textbf{0.9007} & \textbf{0.9003} & 0.0028 \\
 NMF & Random Forest & 0.8721 & 0.8708 & 0.0035 \\
@@ -678,58 +753,43 @@ ISOMAP & SVM (RBF) & 0.8166 & 0.8165 & 0.0048 \\
 Los resultados muestran que la combinación \textbf{PCA + SVM} alcanzó el mejor desempeño global, con un \textit{F1-score} de 0.9003 y estabilidad alta (desviación estándar 0.0028).  
 Por otro lado, \textbf{NMF + Random Forest} destacó como modelo alternativo con buena interpretabilidad y rendimiento competitivo, mientras que \textbf{UMAP + SVM} fue la opción más eficiente en tiempo.
 
+\section{Conclusiones}
 
+Este estudio realizó un análisis comparativo exhaustivo de seis técnicas de reducción de dimensionalidad combinadas con cuatro modelos de clasificación clásicos, aplicados al conjunto de datos \textit{Fashion-MNIST}. Los resultados obtenidos permiten extraer conclusiones significativas tanto a nivel de rendimiento predictivo como de eficiencia computacional.\\
 
-\subsection{Visualización y Análisis de Errores}
-
-\begin{figure}[H]
-\centering
-\includesvg[width=0.50\textwidth]{matriz_confusion_pca_svm_normalizada.svg}
-\caption{Matriz de confusión normalizada del modelo PCA + SVM.}
-\label{fig:matriz_confusion}
-\end{figure}
-
-
-
-
-
-La matriz de confusión muestra un alto nivel de precisión en las clases con siluetas bien definidas (\textit{Trouser}, \textit{Bag}, \textit{Ankle boot}), mientras que las confusiones más frecuentes ocurrieron entre prendas superiores (\textit{T-shirt}, \textit{Pullover}, \textit{Shirt}), tal como anticipaba el análisis exploratorio inicial.
-
-\subsection{Conclusiones}
-
-Este estudio realizó un análisis comparativo exhaustivo de seis técnicas de reducción de dimensionalidad combinadas con cuatro modelos de clasificación clásicos, aplicados al \textit{dataset} \textit{Fashion-MNIST}. Los resultados obtenidos permiten extraer conclusiones significativas tanto a nivel de rendimiento predictivo como de eficiencia computacional.
+\subsection{Conclusiones principales}
 
 \begin{enumerate}
+    \item[(1)] La combinación de \textit{PCA} con \textit{SVM} alcanzó el mejor desempeño global, obteniendo un \textbf{F1-Score de 0.9003} con una desviación estándar de \textbf{0.0028}. Esta combinación se consolidó como la solución más precisa y estable del estudio. La sinergia entre ambas técnicas fue determinante: \textit{PCA}, al maximizar la varianza global, genera un espacio de características optimizado para la posterior separación realizada por \textit{SVM}, que define hiperplanos con gran precisión y eficiencia.\\[2pt]
 
-    \item \textbf{Superioridad de la Combinación \textit{PCA} + \textit{SVM}} \\
-    El hallazgo principal de este trabajo es el rendimiento superior de la combinación de Análisis de Componentes Principales (\textit{PCA}) con una Máquina de Soporte Vectorial (\textit{SVM}). Este par alcanzó el \textit{F1-score} más alto (0.9003) con una notable estabilidad (desviación estándar de 0.0028), posicionándose como la solución más precisa y robusta para este problema de clasificación.
-    
-    La sinergia entre estos dos métodos es la clave de su éxito. \textit{PCA}, al ser una técnica lineal que maximiza la varianza global, actúa como un potente extractor de características. Posteriormente, el clasificador \textit{SVM}, diseñado para encontrar el hiperplano de separación óptimo, opera con una eficiencia y precisión excepcionales en este espacio de características ya depurado.
-    
-    El modelo clasifica con gran acierto clases con siluetas muy definidas como \texttt{Trouser}, \texttt{Bag} y \texttt{Ankle boot}. Las confusiones, aunque mínimas, ocurren de manera predecible entre categorías visualmente similares, como las prendas de la parte superior del cuerpo (\texttt{T-shirt/top}, \texttt{Shirt}, \texttt{Pullover} y \texttt{Coat}).
-
-    % --- ¡IMPORTANTE! ---
-    % Asegúrate de que en tu código, la figura de la matriz de confusión de PCA+SVM tenga la etiqueta: \label{fig:matriz_confusion_pca_svm}
-
-    \item \textbf{El Rol de las Técnicas No Lineales y sus \textit{Trade-offs}} \\
-    Técnicas no lineales como \textit{UMAP} y \textit{t-SNE} demostraron ser herramientas excepcionales para la visualización (Figuras~\ref{fig:tsne_2d_projection} y \ref{fig:umap_2d_projection}). Sin embargo, su enfoque en la preservación de la estructura local no se tradujo en el mayor rendimiento de clasificación. Esto sugiere que la estructura global de la varianza capturada por \textit{PCA} es más informativa para los clasificadores en este problema.
-    
-    No obstante, \textbf{\textit{UMAP} destacó como el método más eficiente computacionalmente}, siendo una opción ideal para escenarios de prototipado rápido o cuando la velocidad de experimentación es el factor crítico.
-    
-    % --- ¡IMPORTANTE! ---
-    % Asegúrate de etiquetar tus figuras de t-SNE y UMAP con:
-    % \label{fig:tsne_viz} y \label{fig:umap_viz} respectivamente.
-
-    \item \textbf{Eficiencia y Optimización de Hiperparámetros} \\
-    Un hallazgo metodológico crucial fue el impacto de la optimización de hiperparámetros. El uso de \textit{Halving Grid Search} permitió reducir los tiempos de entrenamiento en más de un 90\% en comparación con un \textit{Grid Search} exhaustivo, sin sacrificar el rendimiento predictivo. Esto subraya la importancia de emplear estrategias de búsqueda eficientes para hacer viables modelos computacionalmente intensivos.
-
-    \item \textbf{Conclusión Final y Trabajos Futuros} \\
-    En resumen, este estudio demuestra que para la clasificación de imágenes en \textit{Fashion-MNIST}, una técnica lineal como \textbf{\textit{PCA} sigue siendo una herramienta extraordinariamente potente, especialmente cuando se combina con un clasificador robusto como \textit{SVM}}. Mientras que los métodos no lineales son superiores para la visualización y la eficiencia, la maximización de la varianza global de \textit{PCA} proporciona el espacio de características más propicio para una clasificación precisa.
-
-    Como trabajo futuro, sería interesante explorar el uso de estas representaciones de baja dimensión como entrada para redes neuronales convolucionales simples (\textit{CNNs}) para evaluar si pueden acelerar el entrenamiento manteniendo la alta precisión de los modelos de \textit{deep learning}.
-
+    \item[(2)] El modelo clasificó con alta exactitud las clases de siluetas bien definidas (\textit{Trouser}, \textit{Bag}, \textit{Ankle boot}), mientras que las confusiones mínimas ocurrieron entre prendas visualmente similares (\textit{T-shirt/top}, \textit{Pullover}, \textit{Shirt} y \textit{Coat}). Esto evidencia robustez ante estructuras claras y cierta sensibilidad ante similitudes intraclase.
 \end{enumerate}
 
+\subsection{El rol de las técnicas no lineales}
+
+Técnicas no lineales como \textit{UMAP} y \textit{t-SNE} son muy útiles para visualización y exploración de estructuras locales; sin embargo, esta preservación local no se tradujo en un mejor rendimiento de clasificación. La varianza global capturada por \textit{PCA} resultó más informativa para los modelos supervisados.\\
+
+Aun así, \textit{UMAP} destacó por su eficiencia temporal, siendo ideal para prototipado rápido o escenarios donde la velocidad de experimentación es prioritaria.\\
+
+\subsection{Eficiencia y optimización experimental}
+
+La adopción de \textit{Halving Grid Search} redujo los tiempos de búsqueda en más de un 90\% respecto al \textit{Grid Search} tradicional, sin pérdida de rendimiento predictivo, subrayando el valor de estrategias adaptativas en contextos computacionalmente exigentes.\\
+
+\subsection{Conclusión general y líneas futuras}
+
+Una técnica lineal como \textit{PCA} sigue siendo muy potente para clasificación de imágenes cuando se combina con un clasificador robusto como \textit{SVM}. Aunque las técnicas no lineales aportan ventajas visuales y eficiencia, la maximización de varianza de \textit{PCA} provee representaciones más estables y precisas.\\
+
+Como trabajo futuro, es prometedor usar estas representaciones reducidas como entrada a \textit{CNNs} para evaluar si aceleran el entrenamiento manteniendo la precisión de métodos de \textit{deep learning}.\\
+
+\section{Material Complementario}
+
+El código fuente completo de este estudio, incluyendo la implementación de todas las técnicas de reducción de dimensionalidad, los experimentos realizados, y los scripts para la generación de figuras y análisis, se encuentra disponible públicamente en el repositorio de GitHub:
+
+\begin{center}
+\url{https://github.com/ML-2025-2-UTEC/P2-Dimensionality}
+\end{center}
+
+El repositorio contiene notebooks interactivos de Jupyter con los experimentos detallados, permitiendo la reproducibilidad completa de los resultados presentados en este trabajo.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.10.17)  17 OCT 2025 19:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.10.17)  17 OCT 2025 23:58
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -489,27 +489,23 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count315
 \l__pdf_internal_box=\box60
 )
-(./main.aux
-
-LaTeX Warning: Label `fig:matriz_confusion' multiply defined.
-
-)
+(./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
 
 -- Lines per column: 56 (exact).
 (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -553,13 +549,13 @@ e
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 73.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 74.
 
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 73.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 74.
 
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -567,7 +563,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 
 Package svg Info: Last page of `./svg-inkscape/mosaico_fashion_mnist_svg-tex.pd
-f' is 1 on input line 104.
+f' is 1 on input line 105.
 (./svg-inkscape/mosaico_fashion_mnist_svg-tex.pdf_tex
 <./svg-inkscape/mosaico_fashion_mnist_svg-tex.pdf, id=5, page=1, 860.01299pt x 
 408.99005pt>
@@ -584,7 +580,7 @@ ocal/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
  <./svg-inkscape/mosaico_fashion_mnist_svg-tex.pdf>]
 Package svg Info: Last page of `./svg-inkscape/distribucion_clases_fashionmnist
-_svg-tex.pdf' is 1 on input line 117.
+_svg-tex.pdf' is 1 on input line 118.
 
 (./svg-inkscape/distribucion_clases_fashionmnist_svg-tex.pdf_tex
 <./svg-inkscape/distribucion_clases_fashionmnist_svg-tex.pdf, id=69, page=1, 57
@@ -597,7 +593,7 @@ x.pdf , page1 used on input line 56.
 (pdftex.def)             Requested size: 232.19843pt x 143.51184pt.
 )
 Package svg Info: Last page of `./svg-inkscape/histograma_intensidades_fashionm
-nist_svg-tex.pdf' is 1 on input line 128.
+nist_svg-tex.pdf' is 1 on input line 129.
 
 (./svg-inkscape/histograma_intensidades_fashionmnist_svg-tex.pdf_tex
 <./svg-inkscape/histograma_intensidades_fashionmnist_svg-tex.pdf, id=71, page=1
@@ -610,19 +606,19 @@ g-tex.pdf , page1 used on input line 56.
 (pdftex.def)             Requested size: 232.19843pt x 114.69359pt.
 )
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 1
-42.
+43.
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 
 
-Underfull \hbox (badness 2050) in paragraph at lines 162--163
+Underfull \hbox (badness 2050) in paragraph at lines 163--164
 []\OT1/ptm/m/n/10 Finalmente, se in-cluir[]a una com-paraci[]on vi-sual en-tre
  []
 
 Package svg Info: Last page of `./svg-inkscape/comparacion_normalizaciones_svg-
-tex.pdf' is 1 on input line 167.
+tex.pdf' is 1 on input line 168.
 (./svg-inkscape/comparacion_normalizaciones_svg-tex.pdf_tex
 <./svg-inkscape/comparacion_normalizaciones_svg-tex.pdf, id=73, page=1, 650.43p
 t x 433.62pt>
@@ -639,7 +635,7 @@ e/histograma_intensidades_fashionmnist_svg-tex.pdf> <./svg-inkscape/comparacion
 _normalizaciones_svg-tex.pdf>]
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 251--252
+Underfull \hbox (badness 10000) in paragraph at lines 252--253
  \OT1/ptm/m/it/10 4) Uni-form Man-i-fold Ap-prox-i-ma-tion and Pro-jec-tion
  []
 
@@ -650,72 +646,29 @@ Underfull \hbox (badness 10000) in paragraph at lines 251--252
 
 
 [4]
-Overfull \hbox (45.09416pt too wide) in paragraph at lines 409--420
- [][] 
- []
-
-
-Underfull \hbox (badness 1783) in paragraph at lines 424--425
+Underfull \hbox (badness 1783) in paragraph at lines 428--429
 \OT1/ptm/m/n/10 cada com-bi-naci[]on, desta-cando los mejores mod-e-los por
  []
 
 
-Overfull \hbox (1.04689pt too wide) in paragraph at lines 461--472
+Overfull \hbox (1.04689pt too wide) in paragraph at lines 467--478
  [][] 
  []
 
 
-Overfull \hbox (5.96687pt too wide) in paragraph at lines 493--504
+Overfull \hbox (5.96687pt too wide) in paragraph at lines 501--512
  [][] 
  []
 
 
-
-
-Overfull \hbox (1.95877pt too wide) in paragraph at lines 509--520
+Overfull \hbox (8.59875pt too wide) in paragraph at lines 518--529
  [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 522--523
-
- []
-
-
-Underfull \hbox (badness 1817) in paragraph at lines 524--525
-\OT1/ptm/m/n/10 con \OT1/ptm/m/it/10 Ran-dom For-est\OT1/ptm/m/n/10 ), ofre-cie
-ndo una in-ter-pretaci[]on m[]as
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 524--525
-
- []
-
-
-Underfull \hbox (badness 1412) in paragraph at lines 526--527
-\OT1/ptm/m/n/10 lim-i-tado ($\OMS/cmsy/m/n/10 ^^Y$\OT1/ptm/b/n/10 0.74 F1\OT1/p
-tm/m/n/10 ) pese a su util-i-dad para vi-su-alizar
- []
-
-
-Underfull \hbox (badness 1661) in paragraph at lines 526--527
-\OT1/ptm/m/n/10 equi-lib-rio en-tre rendimiento y efi-cien-cia, al-can-zando un
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 526--527
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 528--529
-
- []
 
 Package svg Info: Last page of `./svg-inkscape/matriz_confusion_pca_svm_normali
-zada_svg-tex.pdf' is 1 on input line 534.
+zada_svg-tex.pdf' is 1 on input line 551.
 (./svg-inkscape/matriz_confusion_pca_svm_normalizada_svg-tex.pdf_tex
 <./svg-inkscape/matriz_confusion_pca_svm_normalizada_svg-tex.pdf, id=393, page=
 1, 812.95412pt x 711.73264pt>
@@ -724,102 +677,170 @@ ile (type pdf)
 <use ./svg-inkscape/matriz_confusion_pca_svm_normalizada_svg-tex.pdf, page 1>
 Package pdftex.def Info: ./svg-inkscape/matriz_confusion_pca_svm_normalizada_sv
 g-tex.pdf , page1 used on input line 56.
-(pdftex.def)             Requested size: 258.0pt x 225.88028pt.
+(pdftex.def)             Requested size: 175.43811pt x 153.59512pt.
 )
-Overfull \hbox (6.0pt too wide) in paragraph at lines 534--535
- [][] 
- []
+Package svg Info: Last page of `./svg-inkscape/confusion_matrix_normalized_NMF_
+svg-tex.pdf' is 1 on input line 560.
 
+(./svg-inkscape/confusion_matrix_normalized_NMF_svg-tex.pdf_tex
+<./svg-inkscape/confusion_matrix_normalized_NMF_svg-tex.pdf, id=395, page=1, 66
+5.66447pt x 570.47798pt>
+File: ./svg-inkscape/confusion_matrix_normalized_NMF_svg-tex.pdf Graphic file (
+type pdf)
+<use ./svg-inkscape/confusion_matrix_normalized_NMF_svg-tex.pdf, page 1>
+Package pdftex.def Info: ./svg-inkscape/confusion_matrix_normalized_NMF_svg-tex
+.pdf , page1 used on input line 56.
+(pdftex.def)             Requested size: 175.43811pt x 150.34898pt.
+)
+Package svg Info: Last page of `./svg-inkscape/confusion_matrix_normalized_TSNE
+_RF_svg-tex.pdf' is 1 on input line 569.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+(./svg-inkscape/confusion_matrix_normalized_TSNE_RF_svg-tex.pdf_tex
+<./svg-inkscape/confusion_matrix_normalized_TSNE_RF_svg-tex.pdf, id=397, page=1
+, 665.66447pt x 570.47798pt>
+File: ./svg-inkscape/confusion_matrix_normalized_TSNE_RF_svg-tex.pdf Graphic fi
+le (type pdf)
+<use ./svg-inkscape/confusion_matrix_normalized_TSNE_RF_svg-tex.pdf, page 1>
+Package pdftex.def Info: ./svg-inkscape/confusion_matrix_normalized_TSNE_RF_svg
+-tex.pdf , page1 used on input line 56.
+(pdftex.def)             Requested size: 175.43811pt x 150.34898pt.
+)
+Package svg Info: Last page of `./svg-inkscape/confusion_matrix_normalized_UMAP
+_SVM_svg-tex.pdf' is 1 on input line 578.
 
+(./svg-inkscape/confusion_matrix_normalized_UMAP_SVM_svg-tex.pdf_tex
+<./svg-inkscape/confusion_matrix_normalized_UMAP_SVM_svg-tex.pdf, id=399, page=
+1, 665.66447pt x 570.47798pt>
+File: ./svg-inkscape/confusion_matrix_normalized_UMAP_SVM_svg-tex.pdf Graphic f
+ile (type pdf)
+<use ./svg-inkscape/confusion_matrix_normalized_UMAP_SVM_svg-tex.pdf, page 1>
+Package pdftex.def Info: ./svg-inkscape/confusion_matrix_normalized_UMAP_SVM_sv
+g-tex.pdf , page1 used on input line 56.
+(pdftex.def)             Requested size: 175.43811pt x 150.34898pt.
+)
+Package svg Info: Last page of `./svg-inkscape/confusion_matrix_normalized_Isom
+ap_SVM_svg-tex.pdf' is 1 on input line 587.
 
+(./svg-inkscape/confusion_matrix_normalized_Isomap_SVM_svg-tex.pdf_tex
+<./svg-inkscape/confusion_matrix_normalized_Isomap_SVM_svg-tex.pdf, id=401, pag
+e=1, 665.66447pt x 570.47798pt>
+File: ./svg-inkscape/confusion_matrix_normalized_Isomap_SVM_svg-tex.pdf Graphic
+ file (type pdf)
+<use ./svg-inkscape/confusion_matrix_normalized_Isomap_SVM_svg-tex.pdf, page 1>
+
+Package pdftex.def Info: ./svg-inkscape/confusion_matrix_normalized_Isomap_SVM_
+svg-tex.pdf , page1 used on input line 56.
+(pdftex.def)             Requested size: 175.43811pt x 150.34898pt.
+)
+Package svg Info: Last page of `./svg-inkscape/confusion_matrix_normalized_Spec
+tral_RF_svg-tex.pdf' is 1 on input line 596.
+
+(./svg-inkscape/confusion_matrix_normalized_Spectral_RF_svg-tex.pdf_tex
+<./svg-inkscape/confusion_matrix_normalized_Spectral_RF_svg-tex.pdf, id=403, pa
+ge=1, 665.66447pt x 570.47798pt>
+File: ./svg-inkscape/confusion_matrix_normalized_Spectral_RF_svg-tex.pdf Graphi
+c file (type pdf)
+<use ./svg-inkscape/confusion_matrix_normalized_Spectral_RF_svg-tex.pdf, page 1
+>
+Package pdftex.def Info: ./svg-inkscape/confusion_matrix_normalized_Spectral_RF
+_svg-tex.pdf , page1 used on input line 56.
+(pdftex.def)             Requested size: 175.43811pt x 150.34898pt.
+)
 
 [5]
+
+
+
+[6 <./svg-inkscape/matriz_confusion_pca_svm_normalizada_svg-tex.pdf> <./svg-ink
+scape/confusion_matrix_normalized_NMF_svg-tex.pdf> <./svg-inkscape/confusion_ma
+trix_normalized_TSNE_RF_svg-tex.pdf> <./svg-inkscape/confusion_matrix_normalize
+d_UMAP_SVM_svg-tex.pdf> <./svg-inkscape/confusion_matrix_normalized_Isomap_SVM_
+svg-tex.pdf> <./svg-inkscape/confusion_matrix_normalized_Spectral_RF_svg-tex.pd
+f>]
 Package svg Info: Last page of `./svg-inkscape/pca_2d_projection_svg-tex.pdf' i
-s 1 on input line 549.
+s 1 on input line 612.
  (./svg-inkscape/pca_2d_projection_svg-tex.pdf_tex
-<./svg-inkscape/pca_2d_projection_svg-tex.pdf, id=398, page=1, 797.58292pt x 71
-4.88866pt>
+<./svg-inkscape/pca_2d_projection_svg-tex.pdf, id=2247, page=1, 797.58292pt x 7
+14.88866pt>
 File: ./svg-inkscape/pca_2d_projection_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/pca_2d_projection_svg-tex.pdf, page 1>
 Package pdftex.def Info: ./svg-inkscape/pca_2d_projection_svg-tex.pdf , page1 u
 sed on input line 56.
-(pdftex.def)             Requested size: 113.39923pt x 101.6327pt.
+(pdftex.def)             Requested size: 120.95892pt x 108.41768pt.
 )
 Package svg Info: Last page of `./svg-inkscape/nmf_2d_projection_svg-tex.pdf' i
-s 1 on input line 557.
+s 1 on input line 622.
 
 (./svg-inkscape/nmf_2d_projection_svg-tex.pdf_tex
-<./svg-inkscape/nmf_2d_projection_svg-tex.pdf, id=400, page=1, 797.11963pt x 71
-4.88866pt>
+<./svg-inkscape/nmf_2d_projection_svg-tex.pdf, id=2249, page=1, 797.11963pt x 7
+14.88866pt>
 File: ./svg-inkscape/nmf_2d_projection_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/nmf_2d_projection_svg-tex.pdf, page 1>
 Package pdftex.def Info: ./svg-inkscape/nmf_2d_projection_svg-tex.pdf , page1 u
 sed on input line 56.
-(pdftex.def)             Requested size: 113.39923pt x 101.69815pt.
+(pdftex.def)             Requested size: 120.95892pt x 108.47221pt.
 )
 Package svg Info: Last page of `./svg-inkscape/tsne_2d_projection_svg-tex.pdf' 
-is 1 on input line 565.
+is 1 on input line 632.
 
 (./svg-inkscape/tsne_2d_projection_svg-tex.pdf_tex
-<./svg-inkscape/tsne_2d_projection_svg-tex.pdf, id=402, page=1, 797.57782pt x 7
-14.78702pt>
+<./svg-inkscape/tsne_2d_projection_svg-tex.pdf, id=2251, page=1, 797.57782pt x 
+714.78702pt>
 File: ./svg-inkscape/tsne_2d_projection_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/tsne_2d_projection_svg-tex.pdf, page 1>
 Package pdftex.def Info: ./svg-inkscape/tsne_2d_projection_svg-tex.pdf , page1 
 used on input line 56.
-(pdftex.def)             Requested size: 113.39923pt x 101.61826pt.
+(pdftex.def)             Requested size: 120.95892pt x 108.40225pt.
 )
 Package svg Info: Last page of `./svg-inkscape/umap_2d_projection_svg-tex.pdf' 
-is 1 on input line 573.
+is 1 on input line 642.
 
 (./svg-inkscape/umap_2d_projection_svg-tex.pdf_tex
-<./svg-inkscape/umap_2d_projection_svg-tex.pdf, id=404, page=1, 797.94063pt x 7
-14.88866pt>
+<./svg-inkscape/umap_2d_projection_svg-tex.pdf, id=2253, page=1, 797.94063pt x 
+714.88866pt>
 File: ./svg-inkscape/umap_2d_projection_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/umap_2d_projection_svg-tex.pdf, page 1>
 Package pdftex.def Info: ./svg-inkscape/umap_2d_projection_svg-tex.pdf , page1 
 used on input line 56.
-(pdftex.def)             Requested size: 113.39923pt x 101.58907pt.
+(pdftex.def)             Requested size: 120.95892pt x 108.36313pt.
 )
 Package svg Info: Last page of `./svg-inkscape/spectral_2d_projection_svg-tex.p
-df' is 1 on input line 581.
+df' is 1 on input line 652.
 
 (./svg-inkscape/spectral_2d_projection_svg-tex.pdf_tex
-<./svg-inkscape/spectral_2d_projection_svg-tex.pdf, id=406, page=1, 799.62796pt
- x 714.78702pt>
+<./svg-inkscape/spectral_2d_projection_svg-tex.pdf, id=2255, page=1, 799.62796p
+t x 714.78702pt>
 File: ./svg-inkscape/spectral_2d_projection_svg-tex.pdf Graphic file (type pdf)
 
 <use ./svg-inkscape/spectral_2d_projection_svg-tex.pdf, page 1>
 Package pdftex.def Info: ./svg-inkscape/spectral_2d_projection_svg-tex.pdf , pa
 ge1 used on input line 56.
-(pdftex.def)             Requested size: 113.39923pt x 101.3674pt.
+(pdftex.def)             Requested size: 120.95892pt x 108.11868pt.
 )
 Package svg Info: Last page of `./svg-inkscape/isomap_2d_projection_svg-tex.pdf
-' is 1 on input line 589.
+' is 1 on input line 662.
 
 (./svg-inkscape/isomap_2d_projection_svg-tex.pdf_tex
-<./svg-inkscape/isomap_2d_projection_svg-tex.pdf, id=408, page=1, 797.65967pt x
- 714.88866pt>
+<./svg-inkscape/isomap_2d_projection_svg-tex.pdf, id=2257, page=1, 797.65967pt 
+x 714.88866pt>
 File: ./svg-inkscape/isomap_2d_projection_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/isomap_2d_projection_svg-tex.pdf, page 1>
 Package pdftex.def Info: ./svg-inkscape/isomap_2d_projection_svg-tex.pdf , page
 1 used on input line 56.
-(pdftex.def)             Requested size: 113.39923pt x 101.6218pt.
+(pdftex.def)             Requested size: 120.95892pt x 108.40677pt.
 )
 
 
 
-[6 <./svg-inkscape/matriz_confusion_pca_svm_normalizada_svg-tex.pdf> <./svg-ink
-scape/pca_2d_projection_svg-tex.pdf> <./svg-inkscape/nmf_2d_projection_svg-tex.
-pdf> <./svg-inkscape/tsne_2d_projection_svg-tex.pdf> <./svg-inkscape/umap_2d_pr
-ojection_svg-tex.pdf> <./svg-inkscape/spectral_2d_projection_svg-tex.pdf>]
+[7 <./svg-inkscape/pca_2d_projection_svg-tex.pdf> <./svg-inkscape/nmf_2d_projec
+tion_svg-tex.pdf> <./svg-inkscape/tsne_2d_projection_svg-tex.pdf> <./svg-inksca
+pe/umap_2d_projection_svg-tex.pdf> <./svg-inkscape/spectral_2d_projection_svg-t
+ex.pdf> <./svg-inkscape/isomap_2d_projection_svg-tex.pdf>]
 Package svg Info: Last page of `./svg-inkscape/modelos_mas_rapidos_por_tecnica_
-svg-tex.pdf' is 1 on input line 626.
+svg-tex.pdf' is 1 on input line 701.
 
 (./svg-inkscape/modelos_mas_rapidos_por_tecnica_svg-tex.pdf_tex
-<./svg-inkscape/modelos_mas_rapidos_por_tecnica_svg-tex.pdf, id=151817, page=1,
+<./svg-inkscape/modelos_mas_rapidos_por_tecnica_svg-tex.pdf, id=183929, page=1,
  722.7pt x 433.62pt>
 File: ./svg-inkscape/modelos_mas_rapidos_por_tecnica_svg-tex.pdf Graphic file (
 type pdf)
@@ -828,16 +849,14 @@ Package pdftex.def Info: ./svg-inkscape/modelos_mas_rapidos_por_tecnica_svg-tex
 .pdf , page1 used on input line 56.
 (pdftex.def)             Requested size: 258.0pt x 154.79962pt.
 )
-Overfull \hbox (6.0pt too wide) in paragraph at lines 626--627
+Overfull \hbox (6.0pt too wide) in paragraph at lines 701--702
  [][] 
  []
 
-
-
 Package svg Info: Last page of `./svg-inkscape/top5_models_svg-tex.pdf' is 1 on
- input line 669.
+ input line 744.
 (./svg-inkscape/top5_models_svg-tex.pdf_tex
-<./svg-inkscape/top5_models_svg-tex.pdf, id=151819, page=1, 578.16pt x 361.35pt
+<./svg-inkscape/top5_models_svg-tex.pdf, id=183931, page=1, 578.16pt x 361.35pt
 >
 File: ./svg-inkscape/top5_models_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/top5_models_svg-tex.pdf, page 1>
@@ -845,36 +864,72 @@ Package pdftex.def Info: ./svg-inkscape/top5_models_svg-tex.pdf , page1 used on
  input line 56.
 (pdftex.def)             Requested size: 246.95892pt x 154.34639pt.
 )
-Package svg Info: Last page of `./svg-inkscape/matriz_confusion_pca_svm_normali
-zada_svg-tex.pdf' is 1 on input line 687.
 
-(./svg-inkscape/matriz_confusion_pca_svm_normalizada_svg-tex.pdf_tex
-File: ./svg-inkscape/matriz_confusion_pca_svm_normalizada_svg-tex.pdf Graphic f
-ile (type pdf)
-<use ./svg-inkscape/matriz_confusion_pca_svm_normalizada_svg-tex.pdf, page 1>
-Package pdftex.def Info: ./svg-inkscape/matriz_confusion_pca_svm_normalizada_sv
-g-tex.pdf , page1 used on input line 56.
-(pdftex.def)             Requested size: 258.0pt x 225.88028pt.
-)
-Overfull \hbox (6.0pt too wide) in paragraph at lines 687--688
- [][] 
+
+Underfull \hbox (badness 10000) in paragraph at lines 758--759
+
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \hbox (badness 10000) in paragraph at lines 763--764
+\OT1/ptm/m/n/10 de-sempe[]no global, obte-niendo un \OT1/ptm/b/n/10 F1-Score de
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 763--764
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 770--771
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 772--773
+
+ []
 
 
 
-[7 <./svg-inkscape/isomap_2d_projection_svg-tex.pdf> <./svg-inkscape/modelos_ma
-s_rapidos_por_tecnica_svg-tex.pdf> <./svg-inkscape/top5_models_svg-tex.pdf>]
+[8 <./svg-inkscape/modelos_mas_rapidos_por_tecnica_svg-tex.pdf> <./svg-inkscape
+/top5_models_svg-tex.pdf>]
+Underfull \hbox (badness 8000) in paragraph at lines 776--777
+[]\OT1/ptm/m/n/10 La adopci[]on de \OT1/ptm/m/it/10 Halv-ing Grid Search \OT1/p
+tm/m/n/10 re-dujo los
+ []
 
 
-LaTeX Warning: Reference `fig:tsne_2d_projection' on page 8 undefined on input 
-line 715.
+Underfull \hbox (badness 10000) in paragraph at lines 776--777
+
+ []
 
 
-LaTeX Warning: Reference `fig:umap_2d_projection' on page 8 undefined on input 
-line 715.
+Underfull \hbox (badness 1694) in paragraph at lines 780--781
+\OT1/ptm/m/n/10 para clasi-fi-caci[]on de im[]agenes cuando se com-bina con
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 780--781
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 782--783
+[]\OT1/ptm/m/n/10 Como tra-bajo fu-turo, es prom-ete-dor usar es-tas
+ []
+
+
+Underfull \hbox (badness 3281) in paragraph at lines 782--783
+\OT1/ptm/m/n/10 rep-re-senta-ciones re-duci-das como en-trada a \OT1/ptm/m/it/1
+0 CNNs \OT1/ptm/m/n/10 para
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 782--783
+
+ []
 
 (./main.bbl)
 
@@ -890,27 +945,24 @@ Before submitting the final camera ready copy, remember to:
 
 
 
-[8] (./main.aux)
+
+
+[9
+
+] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
  ) 
 Here is how much of TeX's memory you used:
- 8627 strings out of 473190
- 166231 string characters out of 5715799
- 590753 words of memory out of 5000000
- 31621 multiletter control sequences out of 15000+600000
- 604167 words of font info for 125 fonts, out of 8000000 for 9000
+ 8709 strings out of 473190
+ 171591 string characters out of 5715799
+ 598832 words of memory out of 5000000
+ 31691 multiletter control sequences out of 15000+600000
+ 603071 words of font info for 124 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,15n,93p,853b,476s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 94i,16n,93p,853b,478s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb><
 /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></
@@ -929,10 +981,10 @@ live/2025/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/202
 st/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/
 type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/
 times/utmri8a.pfb>
-Output written on main.pdf (8 pages, 28911968 bytes).
+Output written on main.pdf (9 pages, 29797941 bytes).
 PDF statistics:
- 182333 PDF objects out of 197575 (max. 8388607)
- 120726 compressed objects within 1208 object streams
+ 184173 PDF objects out of 197575 (max. 8388607)
+ 121939 compressed objects within 1220 object streams
  0 named destinations out of 1000 (max. 500000)
- 148 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 193 words of extra memory for PDF output out of 10000 (max. 10000000)
 
